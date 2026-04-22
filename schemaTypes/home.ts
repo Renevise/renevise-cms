@@ -46,6 +46,8 @@ export default defineType({
       ],
     }),
 
+    
+
     // FINAL CTA
     defineField({
       name: "ctaTitle",

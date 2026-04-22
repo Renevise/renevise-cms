@@ -68,6 +68,18 @@ export default defineType({
       description: "Short hero tagline shown on the service detail page",
     }),
 
+    defineField({
+      name: "icon",
+      title: "Icon",
+      type: "string",
+      options: {
+        list: [
+          { title: "Web", value: "web" },
+          { title: "Mobile", value: "mobile" },
+          { title: "AI Content", value: "ai" },
+        ],
+      },
+    }),
     // OPTIONAL LONG CONTENT
     defineField({
       name: "details",
