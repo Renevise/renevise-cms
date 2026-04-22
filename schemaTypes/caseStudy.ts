@@ -62,6 +62,21 @@ export default defineType({
       description: "Must be measurable (e.g. 'Reduced load time by 40%')",
     }),
 
+    // RELATED SERVICE
+    defineField({
+      name: "service",
+      title: "Related Service",
+      type: "reference",
+      to: [{ type: "service" }],
+      description: "Which service this case study demonstrates",
+    }),
+    defineField({
+      name: "details",
+      title: "Detailed Content",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+
     // IMAGE
     defineField({
       name: "image",

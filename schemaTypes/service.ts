@@ -60,12 +60,40 @@ export default defineType({
       options: { hotspot: true },
     }),
 
+    // TAGLINE
+    defineField({
+      name: "tagline",
+      title: "Tagline",
+      type: "string",
+      description: "Short hero tagline shown on the service detail page",
+    }),
+
     // OPTIONAL LONG CONTENT
     defineField({
       name: "details",
       title: "Detailed Content",
       type: "array",
       of: [{ type: "block" }],
+    }),
+
+    // SEO
+    defineField({
+      name: "seo",
+      title: "SEO",
+      type: "object",
+      fields: [
+        defineField({
+          name: "metaTitle",
+          title: "Meta Title",
+          type: "string",
+        }),
+        defineField({
+          name: "metaDescription",
+          title: "Meta Description",
+          type: "text",
+          rows: 2,
+        }),
+      ],
     }),
   ],
 });
