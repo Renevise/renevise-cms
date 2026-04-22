@@ -8,7 +8,6 @@ import contact from "./contact";
 export const schemaTypes = [
   service,
   about,
-  caseStudy,
   home,
   testimonial,
   contact
