@@ -10,5 +10,6 @@ export const schemaTypes = [
   about,
   home,
   testimonial,
-  contact
+  contact,
+  caseStudy
 ];
