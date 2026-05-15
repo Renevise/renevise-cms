@@ -80,6 +80,17 @@ export default defineType({
         ],
       },
     }),
+
+    // TECH TAGS — shown as animated marquee chips on the home services tile
+    defineField({
+      name: "techTags",
+      title: "Tech / Capability Tags",
+      type: "array",
+      of: [{ type: "string" }],
+      description:
+        "5–8 short tags shown as scrolling chips on the home services tile (e.g. Next.js, React, APIs).",
+      validation: (Rule) => Rule.max(12),
+    }),
     // OPTIONAL LONG CONTENT
     defineField({
       name: "details",
