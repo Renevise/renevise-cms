@@ -5,73 +5,173 @@ export default defineType({
   title: "Service",
   type: "document",
 
+  groups: [
+    { name: "hero", title: "Hero" },
+    { name: "overview", title: "What We Do" },
+    { name: "value", title: "Problems & Outcomes" },
+    { name: "stack", title: "Technology Stack" },
+    { name: "shared", title: "Shared / Legacy" },
+    { name: "seo", title: "SEO" },
+  ],
+
   fields: [
-    // TITLE
+    // -------- HERO --------
     defineField({
       name: "title",
       title: "Service Title",
       type: "string",
+      group: "hero",
       validation: (Rule) => Rule.required(),
     }),
 
-    // SLUG
     defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-      },
+      group: "hero",
+      options: { source: "title", maxLength: 96 },
       validation: (Rule) => Rule.required(),
     }),
 
-    // SHORT DESCRIPTION
+    defineField({
+      name: "tagline",
+      title: "Tagline",
+      type: "string",
+      group: "hero",
+      description: "Short hero tagline shown under the title.",
+    }),
+
     defineField({
       name: "description",
       title: "Short Description",
       type: "text",
       rows: 3,
+      group: "hero",
+      description: "Used in hero, navigation cards, and SEO fallbacks.",
     }),
 
-    // PROBLEMS
+    defineField({
+      name: "image",
+      title: "Service Image",
+      type: "image",
+      group: "hero",
+      options: { hotspot: true },
+    }),
+
+    // -------- OVERVIEW / WHAT WE DO --------
+    defineField({
+      name: "overviewHeading",
+      title: "Overview Heading",
+      type: "string",
+      group: "overview",
+      description: "Headline for the dark 'What We Can Do For You' section.",
+    }),
+
+    defineField({
+      name: "serviceOverview",
+      title: "Service Overview (Long Form)",
+      type: "array",
+      of: [{ type: "block" }],
+      group: "overview",
+      description: "Rich long-form copy shown alongside the capability grid.",
+    }),
+
+    defineField({
+      name: "capabilities",
+      title: "Capabilities",
+      type: "array",
+      group: "overview",
+      description: "4–8 capability cards shown in the dark overview section.",
+      of: [
+        {
+          type: "object",
+          name: "capability",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Title",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "description",
+              title: "Description",
+              type: "text",
+              rows: 3,
+            }),
+          ],
+          preview: {
+            select: { title: "title", subtitle: "description" },
+          },
+        },
+      ],
+    }),
+
+    // -------- PROBLEMS / OUTCOMES --------
     defineField({
       name: "problemsSolved",
       title: "Problems We Solve",
       type: "array",
       of: [{ type: "string" }],
-      description: "Add 3–5 real business problems",
+      group: "value",
+      description: "Add 3–6 real business problems.",
     }),
 
-    // OUTCOMES
     defineField({
       name: "outcomes",
       title: "Strategic Outcomes",
       type: "array",
       of: [{ type: "string" }],
-      description: "Add measurable results or benefits",
+      group: "value",
+      description: "Add measurable results or business outcomes.",
     }),
 
-    // IMAGE
+    // -------- TECHNOLOGY STACK --------
     defineField({
-      name: "image",
-      title: "Service Image",
-      type: "image",
-      options: { hotspot: true },
+      name: "technologyCategories",
+      title: "Technology Categories",
+      type: "array",
+      group: "stack",
+      description:
+        "Grouped technology stack shown in the Technology section (e.g. Frontend, Backend, AI Tools).",
+      of: [
+        {
+          type: "object",
+          name: "techCategory",
+          fields: [
+            defineField({
+              name: "title",
+              title: "Category Title",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "technologies",
+              title: "Technologies",
+              type: "array",
+              of: [{ type: "string" }],
+              validation: (Rule) => Rule.min(1),
+            }),
+          ],
+          preview: {
+            select: { title: "title", subtitle: "technologies" },
+            prepare({ title, subtitle }) {
+              return {
+                title,
+                subtitle: Array.isArray(subtitle) ? subtitle.join(", ") : "",
+              };
+            },
+          },
+        },
+      ],
     }),
 
-    // TAGLINE
-    defineField({
-      name: "tagline",
-      title: "Tagline",
-      type: "string",
-      description: "Short hero tagline shown on the service detail page",
-    }),
-
+    // -------- SHARED / LEGACY --------
     defineField({
       name: "icon",
       title: "Icon",
       type: "string",
+      group: "shared",
       options: {
         list: [
           { title: "Web", value: "web" },
@@ -81,29 +181,33 @@ export default defineType({
       },
     }),
 
-    // TECH TAGS — shown as animated marquee chips on the home services tile
     defineField({
       name: "techTags",
-      title: "Tech / Capability Tags",
+      title: "Tech / Capability Tags (Home Tile)",
       type: "array",
       of: [{ type: "string" }],
+      group: "shared",
       description:
-        "5–8 short tags shown as scrolling chips on the home services tile (e.g. Next.js, React, APIs).",
+        "5–8 short tags shown as scrolling chips on the home services tile.",
       validation: (Rule) => Rule.max(12),
     }),
-    // OPTIONAL LONG CONTENT
+
     defineField({
       name: "details",
-      title: "Detailed Content",
+      title: "Detailed Content (Legacy)",
       type: "array",
       of: [{ type: "block" }],
+      group: "shared",
+      description:
+        "Legacy long-form content. Prefer `serviceOverview` going forward.",
     }),
 
-    // SEO
+    // -------- SEO --------
     defineField({
       name: "seo",
       title: "SEO",
       type: "object",
+      group: "seo",
       fields: [
         defineField({
           name: "metaTitle",
@@ -119,4 +223,8 @@ export default defineType({
       ],
     }),
   ],
+
+  preview: {
+    select: { title: "title", subtitle: "tagline", media: "image" },
+  },
 });
