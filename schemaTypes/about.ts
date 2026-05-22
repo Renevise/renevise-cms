@@ -45,9 +45,39 @@ export default defineType({
         {
           type: "object",
           fields: [
+            {
+              name: "icon",
+              title: "Icon",
+              type: "string",
+              description:
+                "Choose the lucide icon to render in this card.",
+              options: {
+                list: [
+                  { title: "Target (Mission / Goals)", value: "target" },
+                  { title: "Shield Check (Integrity / Trust)", value: "shield-check" },
+                  { title: "Users (Team / Expertise)", value: "users" },
+                  { title: "Rocket (Growth / Launch)", value: "rocket" },
+                  { title: "Sparkles (Craft / Quality)", value: "sparkles" },
+                  { title: "Compass (Strategy / Direction)", value: "compass" },
+                  { title: "Heart Handshake (Partnership)", value: "heart-handshake" },
+                  { title: "Layers (Architecture)", value: "layers" },
+                  { title: "Cpu (Engineering Depth)", value: "cpu" },
+                  { title: "Workflow (Process)", value: "workflow" },
+                  { title: "Gauge (Performance)", value: "gauge" },
+                  { title: "Line Chart (Outcomes)", value: "line-chart" },
+                ],
+                layout: "dropdown",
+              },
+            },
             { name: "title", type: "string", title: "Title" },
             { name: "description", type: "text", title: "Description" },
           ],
+          preview: {
+            select: {
+              title: "title",
+              subtitle: "icon",
+            },
+          },
         },
       ],
     }),
